@@ -2,42 +2,46 @@ import numpy as np
 import networkx as nx
 import matplotlib as plt
 
-#TODO
-class link:
-    def __init__(self, endNode, weight):
-        self.endNode = endNode
-        self.weight = weight
+node1 = 'a'
+node2 = 'b'
+node3 = 'c'
+node4 = 'd'
 
-#TODO
-class node:
-    def __init__(self, data):
-        self.data = data
-        self.links = {}
-        self.connected = []
+class Graph:
+    def __init__(self, links):
+        self.link_list = links
 
-    def createLink(self, link):
-        self.connected.append(link)
-        self.links[self.data] = self.connected
+class Node:
+    def __init__(self, value):
+        self.value = value
 
-    def printLinks(self):
-        for node in self.connected:
-            print(f"node {self.data} is connected to node {node.endNode.data} with weight {node.weight} ")
-        
-
-
-
-#TODO
-def ShortestPath (graph, start, end): # usa dijkstra 
-    distances = {node: float('infinity') for node in graph}
+def ShortestPath (graph, start, end):   # utiliza Dijkstra
+    previous = {node: None for node in graph.link_list.keys()}
+    visited = {node: False for node in graph.link_list.keys()}
+    distances = {node: float('inf') for node in graph.link_list.keys()}
     distances[start] = 0
-    print(distances)
-
-ShortestPath(['a', 'b', 'c'], 'a', 'c')
-node1 = node('a')
-node2 = node('b')
-node3 = node('c')
-link_ab = link(node2, 1)
-link_ac = link(node3, 10)
-node1.createLink(link_ab)
-node1.createLink(link_ac)
-node1.printLinks()
+    visited[start] = True
+    priority = [(0, start)]
+   
+    while priority:
+        distance, current = priority[0]
+        priority.pop(0)
+        visited[current] = True
+        if current == end:
+            return f"distancia de {distance} de {start} para {end}"
+        
+        for node in graph.link_list[current]:
+            if visited[node] == False:
+                new_distance = distance + graph.link_list[current][node]
+            if new_distance < distances[node]:
+                distances[node] = new_distance
+                previous[node] = current
+                priority.append((new_distance, node))
+                priority.sort()
+    return
+        
+graph = Graph({node1: {node2: 2, node3: 1},
+               node2: {node4: 10},
+               node3: {},
+               node4: {}})
+print(ShortestPath(graph, node1, node4))
