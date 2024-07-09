@@ -5,15 +5,17 @@ from pyvis.network import Network
 
 
 
+
 class Graph:
     def __init__(self, links):
         self.link_list = links
    
 
 def ShortestPath (graph, start, end):   # utiliza Dijkstra
-    previous = {node: None for node in graph.link_list.keys()}
     visited = {node: False for node in graph.link_list.keys()}
     distances = {node: float('inf') for node in graph.link_list.keys()}
+    paths = {node: [] for node in graph.link_list.keys()}
+    paths[start] = [start]
     distances[start] = 0
     visited[start] = True
     priority = [(0, start)]
@@ -23,16 +25,17 @@ def ShortestPath (graph, start, end):   # utiliza Dijkstra
         priority.pop(0)
         visited[current] = True
         if current == end:
-            return f"distancia de {distance} de {start} para {end}"
+            return f"distancia de {distance} de {start} para {end}\nPath: {' -> '.join(paths[end])}"
         
         for node in graph.link_list[current]:
             if visited[node] == False:
                 new_distance = distance + graph.link_list[current][node]
             if new_distance < distances[node]:
                 distances[node] = new_distance
-                previous[node] = current
+                paths[node] = paths[current] + [node]
                 priority.append((new_distance, node))
                 priority.sort()
+                print(current)
     return
         
         
