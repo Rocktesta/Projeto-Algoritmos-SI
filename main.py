@@ -2,7 +2,7 @@ import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 from pyvis.network import Network
-
+from importacao import importacao_db
 
 
 
@@ -39,43 +39,27 @@ def ShortestPath (graph, start, end):   # utiliza Dijkstra
     return
         
         
-
-graph = Graph({
-    'A': {'B': 2, 'C': 1, 'D': 3},
-    'B': {'E': 5, 'F': 2},
-    'C': {'D': 4, 'G': 3},
-    'D': {'H': 6},
-    'E': {'I': 2},
-    'F': {'J': 3, 'K': 1},
-    'G': {'L': 2},
-    'H': {'M': 1},
-    'I': {'N': 4},
-    'J': {'L': 100},
-    'K': {'O': 2},
-    'L': {'P': 1},
-    'M': {'Q': 3},
-    'N': {},
-    'O': {'R': 4},
-    'P': {},
-    'Q': {},
-    'R': {'S': 5},
-    'S': {'A': 20}
-})
+dicionario = importacao_db()
+graph = Graph(dicionario)
 
 nx_graph = nx.DiGraph()
 
 for node, links in graph.link_list.items():
     for end_node, weight in links.items():
-        nx_graph.add_edge(node, end_node, weight=weight)
+        nx_graph.add_edge(str(node), str(end_node), weight=weight)
 
 net = Network(height='750px', width='100%', notebook=True)
 
+# Add nodes to the PyVis network, ensuring node IDs are strings
 for node in graph.link_list:
-    net.add_node(node, label=node)
+    net.add_node(str(node), label=str(node))
 
+# Add edges to the PyVis network with weights as labels, ensuring node IDs are strings
 for node, edges in graph.link_list.items():
     for end_node, weight in edges.items():
-        net.add_edge(node, end_node, label=str(weight))
+        net.add_edge(str(node), str(end_node), label=str(weight))
+
+# Generate and show the network visualization
 net.show('example.html')
 
-print(ShortestPath(graph, 'A', 'Q'))
+print(ShortestPath(graph, '0', '300'))
