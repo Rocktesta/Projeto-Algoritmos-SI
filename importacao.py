@@ -11,7 +11,7 @@ def importacao_db():
 
     # Carregue o resultado da consulta em um DataFrame
     df = pd.read_sql_query(query, conn)
-    print(df)
+    
 
     conn.close()
 
@@ -25,7 +25,6 @@ def importacao_db():
         if origem not in graph_dict:
             graph_dict[origem] = {}
         graph_dict[origem][destino] = peso
-    print(graph_dict)
     return graph_dict
 importacao_db()
 
