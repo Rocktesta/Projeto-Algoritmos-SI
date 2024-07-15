@@ -12,8 +12,9 @@ dense_matrix = matrix.toarray() if hasattr(matrix, 'toarray') else matrix
 conn = sqlite3.connect('Graph.db')
 cur = conn.cursor()
 
+# Cria a tabela 'grafo' com as colunas origem, destino e distancia se ela não existir
 cur.execute('''
-    CREATE TABLE IF NOT EXISTS grafo (  # Cria a tabela 'grafo' com as colunas origem, destino e distancia se ela não existir
+    CREATE TABLE IF NOT EXISTS grafo (  
         origem INTEGER,
         destino INTEGER,
         distancia REAL
