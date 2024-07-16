@@ -5,7 +5,7 @@ Projeto realizado utilizando o algoritmo Dijkstra - muito usado para encontrar o
 
 Integrantes:
 
-João Henrique Silva Ebbers
-Clara Oliveira Costa
-Luiz Miguel Gonzaga Ramos de Andrade
-Marcelo Correa de Araujo Pedrosa de Melo
+João Henrique Silva Ebbers     
+Clara Oliveira Costa     
+Luiz Miguel Gonzaga Ramos de Andrade    
+Marcelo Correa de Araujo Pedrosa de Melo  
